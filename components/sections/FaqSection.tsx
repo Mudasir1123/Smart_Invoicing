@@ -1,7 +1,8 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { useState, useEffect } from 'react'
 import { Plus } from 'lucide-react'
 
 const faqs = [
@@ -16,6 +17,14 @@ const faqs = [
 ]
 
 export function FaqSection() {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = theme === 'dark'
   const [open, setOpen] = useState<number | null>(0)
 
   return (
@@ -54,10 +63,14 @@ export function FaqSection() {
               transition={{ duration: 0.6, delay: i * 0.05, ease: [0.23, 1, 0.32, 1] }}
               className="overflow-hidden rounded-[1.5rem] cursor-default"
               style={{
-                border: `1.5px solid ${open === i ? 'rgba(30,154,216,0.45)' : 'rgba(30,154,216,0.2)'}`,
-                background: 'rgba(255,255,255,0.65)',
+                border: open === i 
+                  ? (mounted && isDark ? '1.5px solid rgba(30,154,216,0.6)' : '1.5px solid rgba(30,154,216,0.45)') 
+                  : (mounted && isDark ? '1.5px solid rgba(30,154,216,0.15)' : '1.5px solid rgba(30,154,216,0.2)'),
+                background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
                 backdropFilter: 'blur(20px)',
-                boxShadow: open === i ? '0 0 30px rgba(30,154,216,0.12)' : 'none',
+                boxShadow: open === i 
+                  ? (mounted && isDark ? '0 0 30px rgba(30,154,216,0.18), inset 0 1px 1px rgba(255, 255, 255, 0.05)' : '0 0 30px rgba(30,154,216,0.12)') 
+                  : 'none',
                 transition: 'border-color 0.3s, box-shadow 0.3s',
               }}
             >
@@ -102,7 +115,12 @@ export function FaqSection() {
           viewport={{ once: false, margin: '-40px' }}
           transition={{ delay: 0.4, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           className="mt-12 rounded-[1.5rem] p-8 text-center"
-          style={{ border: '1.5px solid rgba(0,162,102,0.3)', background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(20px)' }}
+          style={{ 
+            border: mounted && isDark ? '1.5px solid rgba(0,162,102,0.4)' : '1.5px solid rgba(0,162,102,0.3)', 
+            background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)', 
+            backdropFilter: 'blur(20px)',
+            boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
+          }}
         >
           <p className="text-foreground font-black text-lg">Still have questions?</p>
           <p className="mt-2 text-muted-foreground text-sm">Our team is happy to help. Reach us directly.</p>

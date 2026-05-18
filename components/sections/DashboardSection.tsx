@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { TrendingUp, FileText, Users, DollarSign, ArrowUpRight, ArrowDownRight } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 function useCountUp(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0)
@@ -26,14 +27,19 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 export function DashboardSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) { setVisible(true); observer.disconnect() }
     }, { threshold: 0.3 })
     if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
+
+  const isDark = theme === 'dark'
 
   const revenue = useCountUp(1247500, 2000, visible)
   const invoices = useCountUp(3842, 2000, visible)
@@ -43,8 +49,8 @@ export function DashboardSection() {
   const kpis = [
     { label: 'Total Revenue', value: `PKR ${revenue.toLocaleString()}`, icon: DollarSign, color: '#1E9AD8', trend: '+18.2%', up: true },
     { label: 'Invoices', value: invoices.toLocaleString(), icon: FileText, color: '#00A266', trend: '+24.5%', up: true },
-    { label: 'Clients', value: clients.toLocaleString(), icon: Users, color: '#173B64', trend: '+12.1%', up: true },
-    { label: 'FBR Compliance', value: `${compliance}%`, icon: TrendingUp, color: '#1E9AD8', trend: 'Perfect', up: true },
+    { label: 'Active Clients', value: clients.toLocaleString(), icon: Users, color: '#173B64', trend: '+12.4%', up: true },
+    { label: 'Tax Compliance', value: `${compliance}%`, icon: TrendingUp, color: '#1E9AD8', trend: 'Perfect', up: true },
   ]
 
   const recentInvoices = [
@@ -60,7 +66,7 @@ export function DashboardSection() {
     offset: ["start end", "end start"]
   })
   
-  const headerY = useTransform(scrollYProgress, [0, 0.4], [100, 0])
+  const headerY = useTransform(scrollYProgress, [0, 0.4], [-80, 0])
 
   return (
     <section id="dashboard" ref={sectionRef} className="relative py-32 px-6 lg:px-16 overflow-hidden">
@@ -84,10 +90,10 @@ export function DashboardSection() {
 
         {/* Dashboard UI — 3D swoop-in animation */}
         <motion.div
-          initial={{ opacity: 0, rotateX: 45, y: 200, scale: 0.85 }}
+          initial={{ opacity: 0, rotateX: -12, y: -100, scale: 0.95 }}
           whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
           viewport={{ once: false, margin: '-100px' }}
-          transition={{ type: 'spring', stiffness: 50, damping: 20, mass: 1.2 }}
+          transition={{ type: 'spring', stiffness: 55, damping: 18, mass: 1.1 }}
           style={{ transformPerspective: 1200 }}
           className="relative rounded-[1.5rem] overflow-hidden glass-card"
         >
@@ -95,7 +101,7 @@ export function DashboardSection() {
           <div className="absolute inset-0 rounded-[1.5rem] pointer-events-none" style={{ boxShadow: '0 30px 60px -15px rgba(30,154,216,0.2)' }} />
 
           {/* Top Bar */}
-          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: 'rgba(30,154,216,0.15)', background: 'rgba(30,154,216,0.06)' }}>
+          <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: 'rgba(30,154,216,0.15)', background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(30,154,216,0.06)' }}>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 rounded-full bg-red-400/60" />
               <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
@@ -117,7 +123,11 @@ export function DashboardSection() {
                     viewport={{ once: false }}
                     transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.3 + i * 0.1 }}
                     className="rounded-2xl p-5"
-                    style={{ background: 'rgba(255,255,255,0.5)', border: `1.5px solid ${kpi.color}25`, boxShadow: `inset 0 0 20px ${kpi.color}10` }}
+                    style={{ 
+                      background: mounted && isDark ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.5)', 
+                      border: mounted && isDark ? `1.5px solid ${kpi.color}35` : `1.5px solid ${kpi.color}25`, 
+                      boxShadow: mounted && isDark ? `inset 0 0 20px ${kpi.color}15, 0 1px 1px rgba(255, 255, 255, 0.03)` : `inset 0 0 20px ${kpi.color}10`
+                    }}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${kpi.color}18`, border: `1px solid ${kpi.color}30` }}>
@@ -137,10 +147,14 @@ export function DashboardSection() {
 
             <div className="grid gap-6 lg:grid-cols-5">
               {/* Chart */}
-              <div className="lg:col-span-3 rounded-2xl p-6" style={{ background: 'rgba(255,255,255,0.5)', border: '1.5px solid rgba(30,154,216,0.15)' }}>
+              <div className="lg:col-span-3 rounded-2xl p-6" style={{ 
+                background: mounted && isDark ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.5)', 
+                border: mounted && isDark ? '1.5px solid rgba(30,154,216,0.25)' : '1.5px solid rgba(30,154,216,0.15)',
+                boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.03)' : 'none'
+              }}>
                 <div className="flex items-center justify-between mb-6">
                   <p className="text-sm font-black text-foreground">Revenue Overview</p>
-                  <span className="text-xs font-bold text-muted-foreground bg-black/5 px-3 py-1 rounded-md">2026</span>
+                  <span className="text-xs font-bold text-muted-foreground px-3 py-1 rounded-md" style={{ background: mounted && isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)', color: 'var(--muted-foreground)' }}>2026</span>
                 </div>
                 <div className="flex items-end gap-3 h-40">
                   {revenueData.map((val, i) => (
@@ -173,7 +187,11 @@ export function DashboardSection() {
               </div>
 
               {/* Table */}
-              <div className="lg:col-span-2 rounded-2xl p-6" style={{ background: 'rgba(255,255,255,0.5)', border: '1.5px solid rgba(30,154,216,0.15)' }}>
+              <div className="lg:col-span-2 rounded-2xl p-6" style={{ 
+                background: mounted && isDark ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.5)', 
+                border: mounted && isDark ? '1.5px solid rgba(30,154,216,0.25)' : '1.5px solid rgba(30,154,216,0.15)',
+                boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.03)' : 'none'
+              }}>
                 <p className="text-sm font-black text-foreground mb-6">Recent Invoices</p>
                 <div className="space-y-4">
                   {recentInvoices.map((inv, i) => (
@@ -183,8 +201,8 @@ export function DashboardSection() {
                       whileInView={{ opacity: 1, x: 0, y: 0 }}
                       viewport={{ once: false }}
                       transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.6 + i * 0.1 }}
-                      className="flex items-center justify-between p-3 rounded-xl hover:bg-black/5 transition-colors"
-                      style={{ border: '1px solid rgba(0,0,0,0.05)' }}
+                      className="flex items-center justify-between p-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                      style={{ border: mounted && isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.05)' }}
                     >
                       <div>
                         <p className="text-xs font-black text-foreground">{inv.id}</p>

@@ -6,7 +6,8 @@ import { PageTransition } from '@/components/providers/PageTransition'
 import { motion } from 'framer-motion'
 import { Check, Star, Zap } from 'lucide-react'
 import { AnimatedButton } from '@/components/AnimatedButton'
-import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { useState, useEffect } from 'react'
 
 const plans = [
   {
@@ -73,6 +74,14 @@ const CARD_ENTRIES = [
 ]
 
 export default function PricingPage() {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = theme === 'dark'
   const [billingYearly, setBillingYearly] = useState(false)
 
   return (
@@ -144,10 +153,18 @@ export default function PricingPage() {
                     whileHover={{ y: plan.highlight ? -6 : -10 }}
                     className="group relative flex flex-col justify-between min-h-[560px] rounded-[2rem] p-8 cursor-default"
                     style={{
-                      border: `1.5px solid ${plan.color}${plan.highlight ? '55' : '35'}`,
-                      background: 'rgba(255,255,255,0.65)',
+                      border: mounted && isDark 
+                        ? `1.5px solid ${plan.color}${plan.highlight ? '77' : '44'}`
+                        : `1.5px solid ${plan.color}${plan.highlight ? '55' : '35'}`,
+                      background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
                       backdropFilter: 'blur(20px)',
-                      boxShadow: plan.highlight ? `0 0 50px ${plan.color}18, 0 0 0 1px ${plan.color}22` : 'none',
+                      boxShadow: plan.highlight 
+                        ? (mounted && isDark 
+                          ? `0 0 50px ${plan.color}25, 0 0 0 1px ${plan.color}33, inset 0 1px 1px rgba(255, 255, 255, 0.05)` 
+                          : `0 0 50px ${plan.color}18, 0 0 0 1px ${plan.color}22`) 
+                        : (mounted && isDark 
+                          ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)'
+                          : 'none'),
                       transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
                     }}
                   >

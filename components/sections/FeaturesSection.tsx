@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FileText, BarChart3, Package, Factory, Cloud, HeadphonesIcon } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 const features = [
   { icon: FileText,       title: 'Fast & Accurate Invoicing',     description: 'Generate FBR-compliant digital invoices instantly. Complete scenario testing ensures zero errors every time.', color: '#1E9AD8' },
@@ -18,6 +19,14 @@ const SCROLL_VARIANTS = ['flip', 'slide-left', 'slide-right', 'scale', 'flip', '
 type Dir = typeof SCROLL_VARIANTS[number]
 
 function FeatureCard({ feature, index }: { feature: typeof features[number]; index: number }) {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = theme === 'dark'
   const Icon = feature.icon
   const dir = SCROLL_VARIANTS[index]
 
@@ -37,9 +46,10 @@ function FeatureCard({ feature, index }: { feature: typeof features[number]; ind
       whileHover={{ y: -10, scale: 1.03 }}
       className="group relative cursor-default overflow-hidden rounded-[1.5rem]"
       style={{
-        border: `1.5px solid ${feature.color}35`,
-        background: 'rgba(255,255,255,0.65)',
+        border: mounted && isDark ? `1.5px solid ${feature.color}44` : `1.5px solid ${feature.color}35`,
+        background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'blur(20px)',
+        boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
         transformPerspective: 900,
         transformStyle: 'preserve-3d',
@@ -60,9 +70,6 @@ function FeatureCard({ feature, index }: { feature: typeof features[number]; ind
         className="absolute bottom-0 left-6 right-6 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none"
         style={{ background: `linear-gradient(90deg, ${feature.color}, transparent)` }}
       />
-
-      {/* Dark mode override */}
-      <style>{`.dark .feat-card-${index} { background: rgba(8,18,36,0.6) !important; border-color: ${feature.color}28 !important; }`}</style>
 
       <div className={`p-8 feat-card-${index}`}>
         {/* Icon */}
@@ -100,7 +107,7 @@ export function FeaturesSection() {
     offset: ["start end", "end start"]
   })
   
-  const headerY = useTransform(scrollYProgress, [0, 0.5], [100, 0])
+  const headerY = useTransform(scrollYProgress, [0, 0.5], [-80, 0])
 
   return (
     <section id="features" ref={containerRef} className="relative py-32 px-6 lg:px-16 overflow-hidden">

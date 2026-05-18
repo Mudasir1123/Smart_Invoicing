@@ -109,7 +109,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="relative z-10 mt-12 p-5 rounded-2xl border" style={{ background: 'rgba(255,255,255,0.4)', borderColor: 'rgba(30,154,216,0.15)' }}>
+                <div className="relative z-10 mt-12 p-5 rounded-2xl border border-blue-500/20 dark:border-blue-400/20 bg-white/35 dark:bg-slate-900/60 backdrop-blur-md">
                   <p className="text-xs font-bold text-foreground">💡 Direct Backing</p>
                   <p className="text-[11px] font-semibold text-muted-foreground mt-1 leading-relaxed">
                     Muhammed Asif & Muhammed Raza represent 25+ years of combined experience in the digital invoicing industry.

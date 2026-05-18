@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { CreditCard, Cloud, Building2, Globe, Smartphone, ShieldCheck, BarChart3, FileText } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { useState, useEffect } from 'react'
 
 const integrations = [
   { icon: CreditCard,   label: 'Payment Systems',      desc: 'JazzCash, EasyPaisa, Bank Transfers',         color: '#1E9AD8' },
@@ -27,6 +29,15 @@ const getVariant = (i: number) => {
 }
 
 export function IntegrationsSection() {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = theme === 'dark'
+
   return (
     <section id="integrations" className="relative py-28 px-6 lg:px-16 overflow-hidden">
       <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[150px] opacity-[0.06]" style={{ background: 'radial-gradient(ellipse, #173B64, #1E9AD8)' }} />
@@ -68,9 +79,10 @@ export function IntegrationsSection() {
                 whileHover={{ y: -8, scale: 1.06 }}
                 className="group relative rounded-[1.5rem] p-6 flex flex-col items-center text-center cursor-default overflow-hidden"
                 style={{
-                  border: `1.5px solid ${item.color}35`,
-                  background: 'rgba(255,255,255,0.65)',
+                  border: mounted && isDark ? `1.5px solid ${item.color}44` : `1.5px solid ${item.color}35`,
+                  background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
                   backdropFilter: 'blur(20px)',
+                  boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
                   transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)',
                 }}
               >
@@ -102,7 +114,11 @@ export function IntegrationsSection() {
           viewport={{ once: false, margin: '-40px' }}
           transition={{ delay: 0.4, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           className="mt-16 relative rounded-[1.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden"
-          style={{ border: '1.5px solid rgba(30,154,216,0.3)', background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(20px)' }}
+          style={{ 
+            border: mounted && isDark ? '1.5px solid rgba(30,154,216,0.4)' : '1.5px solid rgba(30,154,216,0.3)', 
+            background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)', 
+            backdropFilter: 'blur(20px)' 
+          }}
         >
           <div className="inner-sweep" />
           <div>
