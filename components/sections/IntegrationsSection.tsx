@@ -47,7 +47,7 @@ export function IntegrationsSection() {
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: false, margin: '-80px' }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-20"
         >
@@ -74,22 +74,23 @@ export function IntegrationsSection() {
                 key={i}
                 initial={getVariant(i)}
                 whileInView={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                viewport={{ once: false, margin: '-50px' }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.65, delay: Math.floor(i / 4) * 0.12 + (i % 4) * 0.07, ease: [0.23, 1, 0.32, 1] }}
                 whileHover={{ y: -8, scale: 1.06 }}
                 className="group relative rounded-[1.5rem] p-6 flex flex-col items-center text-center cursor-default overflow-hidden"
                 style={{
                   border: mounted && isDark ? `1.5px solid ${item.color}44` : `1.5px solid ${item.color}35`,
                   background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
-                  backdropFilter: 'blur(20px)',
+                  backdropFilter: 'blur(10px)',
                   boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
                   transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)',
+                  willChange: 'transform',
                 }}
               >
                 {/* Inset glow */}
                 <div className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: `inset 0 0 40px ${item.color}22, 0 0 30px ${item.color}14` }} />
                 {/* Bottom accent */}
-                <div className="absolute bottom-0 left-4 right-4 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none" style={{ background: `linear-gradient(90deg, ${item.color}, transparent)` }} />
+                <div className="absolute bottom-0 left-4 right-4 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none" style={{ background: item.color }} />
                 <div className="inner-sweep" />
 
                 <motion.div
@@ -111,7 +112,7 @@ export function IntegrationsSection() {
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: false, margin: '-40px' }}
+          viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.4, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           className="mt-16 relative rounded-[1.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden"
           style={{ 
@@ -129,7 +130,7 @@ export function IntegrationsSection() {
             href="tel:+923242465217"
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="flex-shrink-0 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg"
+            className="flex-shrink-0 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg hover:!bg-none hover:bg-[#1E9AD8] transition-colors duration-300"
             style={{ background: 'linear-gradient(135deg, #1E9AD8, #00A266)' }}
           >
             Talk to Our Team

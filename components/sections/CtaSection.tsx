@@ -123,6 +123,7 @@ export function CtaSection() {
                 href={`tel:${contact.phone.replace(/\s/g, '')}`}
                 whileHover={{ scale: 1.05, y: -3 }}
                 className="glass-card flex items-center gap-3 px-5 py-3 cursor-pointer"
+                style={{ willChange: 'transform' }}
               >
                 <div
                   className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"

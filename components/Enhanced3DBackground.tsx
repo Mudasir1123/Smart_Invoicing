@@ -63,56 +63,60 @@ export function Enhanced3DBackground() {
 
         {/* Primary 3D Glow Blob 1 - Top Left */}
         <motion.div
-          style={{ y: blobY1 }}
           animate={{
-            opacity: [0.4, 0.6, 0.4],
-            scale: [1, 1.1, 1],
+            opacity: [0.35, 0.5, 0.35],
+            scale: [1, 1.08, 1],
           }}
           transition={{ duration: 8, repeat: Infinity }}
-          className={`absolute -top-[15%] -left-[10%] w-[60vw] h-[60vw] rounded-full filter blur-[140px] pointer-events-none transition-colors duration-500 ${
-            isDark
-              ? 'bg-gradient-to-br from-cyan-500/40 via-blue-500/30 to-purple-500/20 mix-blend-screen'
-              : 'bg-gradient-to-br from-sky-400/40 via-blue-300/30 to-cyan-300/20 mix-blend-multiply'
-          }`}
+          className="absolute -top-[15%] -left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none transition-colors duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(59, 130, 246, 0.1) 45%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(14, 165, 233, 0.18) 0%, rgba(59, 130, 246, 0.08) 45%, transparent 70%)',
+            y: blobY1,
+          }}
         />
 
         {/* Secondary 3D Glow Blob 2 - Top Right */}
         <motion.div
-          style={{ y: blobY2 }}
           animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.15, 1],
+            opacity: [0.25, 0.4, 0.25],
+            scale: [1, 1.1, 1],
           }}
           transition={{ duration: 10, repeat: Infinity, delay: 2 }}
-          className={`absolute -top-[5%] right-[-15%] w-[50vw] h-[50vw] rounded-full filter blur-[160px] pointer-events-none transition-colors duration-500 ${
-            isDark
-              ? 'bg-gradient-to-bl from-purple-600/35 via-pink-500/25 to-violet-500/15 mix-blend-screen'
-              : 'bg-gradient-to-bl from-indigo-300/35 via-pink-200/25 to-purple-200/15 mix-blend-multiply'
-          }`}
+          className="absolute -top-[5%] right-[-15%] w-[50vw] h-[50vw] rounded-full pointer-events-none transition-colors duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(236, 72, 153, 0.08) 45%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(129, 140, 248, 0.15) 0%, rgba(244, 114, 182, 0.06) 45%, transparent 70%)',
+            y: blobY2,
+          }}
         />
 
         {/* Tertiary 3D Glow Blob 3 - Bottom Center */}
         <motion.div
-          style={{ y: blobY3 }}
           animate={{
-            opacity: [0.35, 0.55, 0.35],
-            scale: [1, 1.12, 1],
+            opacity: [0.3, 0.45, 0.3],
+            scale: [1, 1.08, 1],
           }}
           transition={{ duration: 12, repeat: Infinity, delay: 4 }}
-          className={`absolute -bottom-[15%] left-[15%] w-[55vw] h-[55vw] rounded-full filter blur-[150px] pointer-events-none transition-colors duration-500 ${
-            isDark
-              ? 'bg-gradient-to-tr from-emerald-500/35 via-teal-500/25 to-cyan-500/15 mix-blend-screen'
-              : 'bg-gradient-to-tr from-emerald-300/35 via-teal-200/25 to-cyan-200/15 mix-blend-multiply'
-          }`}
+          className="absolute -bottom-[15%] left-[15%] w-[55vw] h-[55vw] rounded-full pointer-events-none transition-colors duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(20, 184, 166, 0.08) 45%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(110, 231, 183, 0.15) 0%, rgba(153, 246, 228, 0.06) 45%, transparent 70%)',
+            y: blobY3,
+          }}
         />
 
         {/* Dynamic Center Spotlight */}
         <div
-          className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[120vh] pointer-events-none filter blur-[180px] transition-opacity duration-500 ${
-            isDark
-              ? 'bg-gradient-to-b from-blue-600/25 via-purple-500/15 to-transparent opacity-50'
-              : 'bg-gradient-to-b from-sky-500/40 via-blue-300/25 to-transparent opacity-60'
-          }`}
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[120vh] pointer-events-none transition-opacity duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(ellipse at top, rgba(37, 99, 235, 0.12) 0%, rgba(168, 85, 247, 0.05) 50%, transparent 80%)'
+              : 'radial-gradient(ellipse at top, rgba(14, 165, 233, 0.18) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 80%)',
+          }}
         />
 
         {/* Cinematic Grid Lines */}
@@ -343,10 +347,13 @@ function CursorGlow({ isDark }: { isDark: boolean }) {
   return (
     <div
       ref={glowRef}
-      className={`absolute top-0 left-0 w-[240px] h-[240px] rounded-full pointer-events-none filter blur-[100px] opacity-[0.15] dark:opacity-[0.25] transition-colors duration-500 ${
-        isDark ? 'bg-blue-500' : 'bg-sky-400'
-      }`}
-      style={{ transform: 'translate3d(0, 0, 0)' }}
+      className="absolute top-0 left-0 w-[240px] h-[240px] rounded-full pointer-events-none transition-colors duration-500"
+      style={{
+        background: isDark
+          ? 'radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%)',
+        transform: 'translate3d(0, 0, 0)',
+      }}
     />
   )
 }

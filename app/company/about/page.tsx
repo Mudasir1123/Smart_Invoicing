@@ -54,7 +54,7 @@ export default function About() {
               <motion.div
                 initial={{ opacity: 0, x: -50, y: 30 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, margin: '-60px' }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{ type: 'spring', stiffness: 60, damping: 15 }}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="glass-card p-10 relative overflow-hidden flex flex-col justify-between"
@@ -76,7 +76,7 @@ export default function About() {
               <motion.div
                 initial={{ opacity: 0, x: 50, y: 30 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, margin: '-60px' }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.15 }}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="glass-card p-10 relative overflow-hidden flex flex-col justify-between"

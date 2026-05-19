@@ -15,20 +15,20 @@ export function Loader({ onComplete }: LoaderProps) {
   useEffect(() => {
     let n = 0
     const id = setInterval(() => {
-      n += Math.floor(Math.random() * 7) + 2
+      n += Math.floor(Math.random() * 12) + 6
       if (n >= 100) {
         n = 100
         clearInterval(id)
         setCount(100)
-        setTimeout(() => setDone(true), 350)
+        setDone(true)
         setTimeout(() => {
           setVisible(false)
           onComplete?.()
-        }, 1000)
+        }, 550)
       } else {
         setCount(n)
       }
-    }, 38)
+    }, 30)
     return () => clearInterval(id)
   }, [onComplete])
 

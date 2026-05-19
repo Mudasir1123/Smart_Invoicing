@@ -67,11 +67,12 @@ export function FaqSection() {
                   ? (mounted && isDark ? '1.5px solid rgba(30,154,216,0.6)' : '1.5px solid rgba(30,154,216,0.45)') 
                   : (mounted && isDark ? '1.5px solid rgba(30,154,216,0.15)' : '1.5px solid rgba(30,154,216,0.2)'),
                 background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
-                backdropFilter: 'blur(20px)',
+                backdropFilter: 'blur(10px)',
                 boxShadow: open === i 
                   ? (mounted && isDark ? '0 0 30px rgba(30,154,216,0.18), inset 0 1px 1px rgba(255, 255, 255, 0.05)' : '0 0 30px rgba(30,154,216,0.12)') 
                   : 'none',
                 transition: 'border-color 0.3s, box-shadow 0.3s',
+                willChange: 'transform',
               }}
             >
               <button
@@ -118,14 +119,15 @@ export function FaqSection() {
           style={{ 
             border: mounted && isDark ? '1.5px solid rgba(0,162,102,0.4)' : '1.5px solid rgba(0,162,102,0.3)', 
             background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)', 
-            backdropFilter: 'blur(20px)',
+            backdropFilter: 'blur(10px)',
             boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
+            willChange: 'transform',
           }}
         >
           <p className="text-foreground font-black text-lg">Still have questions?</p>
           <p className="mt-2 text-muted-foreground text-sm">Our team is happy to help. Reach us directly.</p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <motion.a href="tel:+923242465217" whileHover={{ scale: 1.06, y: -2 }} className="rounded-xl px-5 py-3 text-sm font-bold text-white shadow-lg" style={{ background: 'linear-gradient(135deg, #1E9AD8, #00A266)' }}>
+            <motion.a href="tel:+923242465217" whileHover={{ scale: 1.06, y: -2 }} className="rounded-xl px-5 py-3 text-sm font-bold text-white shadow-lg hover:!bg-none hover:bg-[#1E9AD8] transition-colors duration-300" style={{ background: 'linear-gradient(135deg, #1E9AD8, #00A266)' }}>
               Call: +92 324 2465217
             </motion.a>
             <motion.a href="https://wa.me/923319287869" target="_blank" rel="noreferrer" whileHover={{ scale: 1.06, y: -2 }} className="rounded-xl px-5 py-3 text-sm font-bold border" style={{ borderColor: 'rgba(0,162,102,0.4)', color: '#00A266' }}>

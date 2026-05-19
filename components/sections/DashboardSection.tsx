@@ -92,9 +92,9 @@ export function DashboardSection() {
         <motion.div
           initial={{ opacity: 0, rotateX: -12, y: -100, scale: 0.95 }}
           whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
-          viewport={{ once: false, margin: '-100px' }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ type: 'spring', stiffness: 55, damping: 18, mass: 1.1 }}
-          style={{ transformPerspective: 1200 }}
+          style={{ transformPerspective: 1200, willChange: 'transform' }}
           className="relative rounded-[1.5rem] overflow-hidden glass-card"
         >
           {/* Dashboard glow and border */}
@@ -120,13 +120,14 @@ export function DashboardSection() {
                     key={i}
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: false }}
+                    viewport={{ once: true }}
                     transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.3 + i * 0.1 }}
                     className="rounded-2xl p-5"
                     style={{ 
                       background: mounted && isDark ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.5)', 
                       border: mounted && isDark ? `1.5px solid ${kpi.color}35` : `1.5px solid ${kpi.color}25`, 
-                      boxShadow: mounted && isDark ? `inset 0 0 20px ${kpi.color}15, 0 1px 1px rgba(255, 255, 255, 0.03)` : `inset 0 0 20px ${kpi.color}10`
+                      boxShadow: mounted && isDark ? `inset 0 0 20px ${kpi.color}15, 0 1px 1px rgba(255, 255, 255, 0.03)` : `inset 0 0 20px ${kpi.color}10`,
+                      willChange: 'transform'
                     }}
                   >
                     <div className="flex items-start justify-between mb-4">
@@ -162,7 +163,7 @@ export function DashboardSection() {
                       key={i}
                       initial={{ scaleY: 0 }}
                       whileInView={{ scaleY: 1 }}
-                      viewport={{ once: false }}
+                      viewport={{ once: true }}
                       transition={{ delay: 0.4 + i * 0.05, duration: 0.6, type: 'spring', stiffness: 100 }}
                       className="flex-1 rounded-t-lg relative group"
                       style={{
@@ -199,7 +200,7 @@ export function DashboardSection() {
                       key={i}
                       initial={{ opacity: 0, x: 40, y: 20 }}
                       whileInView={{ opacity: 1, x: 0, y: 0 }}
-                      viewport={{ once: false }}
+                      viewport={{ once: true }}
                       transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.6 + i * 0.1 }}
                       className="flex items-center justify-between p-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                       style={{ border: mounted && isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.05)' }}

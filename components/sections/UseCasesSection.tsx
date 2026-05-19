@@ -95,7 +95,7 @@ export function UseCasesSection() {
                 key={i}
                 initial={ENTRIES[i]}
                 whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0, scale: 1, rotate: 0 }}
-                viewport={{ once: false, margin: '-60px' }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.8, delay: i * 0.15, ease: [0.23, 1, 0.32, 1] }}
                 whileHover={{ y: -12, scale: 1.03 }}
                 className="group relative rounded-[1.5rem] p-8 flex flex-col cursor-default overflow-hidden glass-card"
@@ -104,6 +104,7 @@ export function UseCasesSection() {
                   boxShadow: c.highlight ? `0 0 40px ${c.color}15` : 'none',
                   transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
                   transformStyle: 'preserve-3d',
+                  willChange: 'transform',
                 }}
               >
                 {/* Glow */}
@@ -137,7 +138,7 @@ export function UseCasesSection() {
                       key={pi}
                       initial={{ opacity: 0, x: -12 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: false }}
+                      viewport={{ once: true }}
                       transition={{ delay: i * 0.1 + pi * 0.07 }}
                       className="flex items-start gap-3 text-sm text-foreground/80"
                     >

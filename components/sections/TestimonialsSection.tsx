@@ -96,10 +96,22 @@ export function TestimonialsSection() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.97 }}
               transition={{ duration: 0.5 }}
-              className="glass-card neon-border p-8 md:p-12 relative overflow-hidden"
+              whileHover={{
+                borderColor: testimonials[active].color,
+                boxShadow: `0 0 45px ${testimonials[active].color}30, 0 20px 60px rgba(0,0,0,0.35)`
+              }}
+              className="glass-card p-8 md:p-12 relative overflow-hidden min-h-[350px] md:min-h-[290px] flex flex-col justify-center transition-all duration-300 group"
+              style={{ border: '1.5px solid rgba(255,255,255,0.06)' }}
             >
+              {/* Dynamic hover background color layer */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-[0.18] transition-opacity duration-500 pointer-events-none z-0"
+                style={{
+                  backgroundColor: testimonials[active].color,
+                }}
+              />
               <div className="inner-sweep" />
-              <Quote size={80} className="absolute -top-2 -right-2 opacity-[0.04]" style={{ color: testimonials[active].color }} />
+              <Quote size={80} className="absolute -top-2 -right-2 opacity-[0.04] z-0" style={{ color: testimonials[active].color }} />
               <div className="relative z-10">
                 <Stars rating={testimonials[active].rating} />
                 <p className="mt-6 text-xl md:text-2xl font-medium text-foreground leading-relaxed">
@@ -135,11 +147,33 @@ export function TestimonialsSection() {
 
         <div className="mt-12 grid grid-cols-5 gap-3">
           {testimonials.map((t, i) => (
-            <motion.button key={i} onClick={() => setActive(i)} whileHover={{ y: -3 }} className="glass-card p-3 text-center transition-all duration-300" style={{ border: `1px solid ${i === active ? t.color + '44' : 'rgba(255,255,255,0.06)'}`, opacity: i === active ? 1 : 0.6 }}>
-              <div className="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-white text-xs font-black mb-1" style={{ background: `linear-gradient(135deg, ${t.color}, #173B64)` }}>
+            <motion.button
+              key={i}
+              onClick={() => setActive(i)}
+              whileHover={{
+                y: -4,
+                borderColor: t.color,
+                boxShadow: `0 0 20px ${t.color}30, 0 8px 24px rgba(0,0,0,0.2)`
+              }}
+              className="glass-card p-3 text-center transition-all duration-300 relative group overflow-hidden"
+              style={{
+                border: `1px solid ${i === active ? t.color + '66' : 'rgba(255,255,255,0.06)'}`,
+                opacity: i === active ? 1 : 0.6
+              }}
+            >
+              {/* Dynamic hover and active background color layer */}
+              <div 
+                className={`absolute inset-0 transition-opacity duration-300 pointer-events-none z-0 ${
+                  i === active ? 'opacity-[0.16]' : 'opacity-0 group-hover:opacity-[0.24]'
+                }`}
+                style={{
+                  backgroundColor: t.color
+                }}
+              />
+              <div className="w-8 h-8 rounded-full mx-auto flex items-center justify-center text-white text-xs font-black mb-1 relative z-10" style={{ background: `linear-gradient(135deg, ${t.color}, #173B64)` }}>
                 {t.avatar}
               </div>
-              <p className="text-[10px] text-muted-foreground truncate">{t.name.split(' ')[0]}</p>
+              <p className="text-[10px] text-muted-foreground truncate relative z-10">{t.name.split(' ')[0]}</p>
             </motion.button>
           ))}
         </div>

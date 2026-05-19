@@ -86,8 +86,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: var(--font-geist-sans), 'Geist Fallback', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -129,7 +129,7 @@
 /* Glassmorphism & Premium Effects */
 .glass-card {
   position: relative;
-  backdrop-filter: blur(24px) saturate(200%);
+  backdrop-filter: blur(10px) saturate(200%);
   background: rgba(255, 255, 255, 0.90);
   border: 1.5px solid rgba(30, 154, 216, 0.15);
   border-radius: 1.5rem;
@@ -198,12 +198,10 @@
   position: absolute;
   inset: -2px;
   border-radius: 1.6rem;
-  background: linear-gradient(45deg, #1e9ad8, #10b981, #8b5cf6, #1e9ad8);
-  background-size: 200% 200%;
+  background: #1e9ad8;
   z-index: -1;
   opacity: 0;
   transition: opacity 0.5s ease;
-  animation: neonGlow 4s linear infinite;
   filter: blur(12px);
 }
 
@@ -229,9 +227,10 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Smooth Scroll */
+/* Smooth Scroll & Font Size reduction by 2px */
 html {
   scroll-behavior: smooth;
+  font-size: 14px;
 }
 
 /* Animations */

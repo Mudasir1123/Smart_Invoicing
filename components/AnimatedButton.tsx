@@ -23,6 +23,7 @@ export function AnimatedButton({
   glow = true,
 }: AnimatedButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null)
+  const rectRef = useRef<DOMRect | null>(null)
 
   // ── Magnetic effect via motion values ─────────────────────────
   const x = useMotionValue(0)
@@ -30,33 +31,33 @@ export function AnimatedButton({
   const springX = useSpring(x, { stiffness: 200, damping: 18 })
   const springY = useSpring(y, { stiffness: 200, damping: 18 })
 
+  const handleMouseEnter = () => {
+    if (disabled) return
+    rectRef.current = btnRef.current?.getBoundingClientRect() ?? null
+  }
+
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return
-    const rect = btnRef.current?.getBoundingClientRect()
+    let rect = rectRef.current
+    if (!rect) {
+      rect = btnRef.current?.getBoundingClientRect() ?? null
+      rectRef.current = rect
+    }
     if (!rect) return
     const cx = rect.left + rect.width  / 2
     const cy = rect.top  + rect.height / 2
     x.set((e.clientX - cx) * 0.35)
     y.set((e.clientY - cy) * 0.35)
   }
-  const handleMouseLeave = () => { x.set(0); y.set(0) }
+  
+  const handleMouseLeave = () => {
+    rectRef.current = null
+    x.set(0)
+    y.set(0)
+  }
 
-  // ── Ripple effect ─────────────────────────────────────────────
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return
-    const btn  = btnRef.current
-    if (!btn) return
-    const rect   = btn.getBoundingClientRect()
-    const ripple = document.createElement('span')
-    const size   = Math.max(rect.width, rect.height)
-    ripple.className = 'ripple'
-    ripple.style.cssText = `
-      width: ${size}px; height: ${size}px;
-      left: ${e.clientX - rect.left - size / 2}px;
-      top:  ${e.clientY - rect.top  - size / 2}px;
-    `
-    btn.appendChild(ripple)
-    setTimeout(() => ripple.remove(), 700)
     onClick?.()
   }
 
@@ -67,7 +68,7 @@ export function AnimatedButton({
       bg-gradient-to-r from-[#1e9ad8] via-[#22d3ee] to-[#10b981]
       text-white border border-transparent
       bg-[length:200%_200%] bg-left
-      hover:bg-right hover:shadow-[0_0_30px_rgba(30,154,216,0.6)]
+      hover:!bg-none hover:bg-[#1e9ad8] hover:shadow-[0_0_30px_rgba(30,154,216,0.6)]
       ${glow ? 'btn-glow' : ''}
     `,
     secondary: `
@@ -93,6 +94,7 @@ export function AnimatedButton({
       ref={btnRef}
       onClick={handleClick}
       disabled={disabled}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}

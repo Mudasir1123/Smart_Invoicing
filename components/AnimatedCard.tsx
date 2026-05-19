@@ -42,13 +42,28 @@ export function AnimatedCard({
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 300, damping: 30 })
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 300, damping: 30 })
 
+  const rectRef = useRef<DOMRect | null>(null)
+
+  const handleMouseEnter = () => {
+    rectRef.current = cardRef.current?.getBoundingClientRect() ?? null
+  }
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = cardRef.current?.getBoundingClientRect()
+    let rect = rectRef.current
+    if (!rect) {
+      rect = cardRef.current?.getBoundingClientRect() ?? null
+      rectRef.current = rect
+    }
     if (!rect) return
     mouseX.set((e.clientX - rect.left) / rect.width - 0.5)
     mouseY.set((e.clientY - rect.top) / rect.height - 0.5)
   }
-  const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0) }
+  
+  const handleMouseLeave = () => {
+    rectRef.current = null
+    mouseX.set(0)
+    mouseY.set(0)
+  }
 
   // Direction-based entrance variants
   const initialMap: Record<string, object> = {
@@ -81,6 +96,7 @@ export function AnimatedCard({
       }}
       viewport={{ once: false, margin: '-60px' }}
       style={{ rotateX, rotateY, transformPerspective: 1000 }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       data-cursor-hover
@@ -90,7 +106,7 @@ export function AnimatedCard({
       <div
         className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: palette.gradient,
+          background: palette.glow,
           padding: '1.5px',
           borderRadius: '1.5rem',
           zIndex: -1,
@@ -117,19 +133,19 @@ export function AnimatedCard({
         {/* Top-left corner accent */}
         <div
           className="absolute top-0 left-0 w-20 h-20 rounded-br-full opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
-          style={{ background: palette.gradient }}
+          style={{ background: palette.glow }}
         />
 
         {/* Bottom-right corner accent */}
         <div
           className="absolute bottom-0 right-0 w-16 h-16 rounded-tl-full opacity-5 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none"
-          style={{ background: palette.gradient }}
+          style={{ background: palette.glow }}
         />
 
         {/* Hover glow border bottom line */}
         <div
           className="absolute bottom-0 left-4 right-4 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
-          style={{ background: palette.gradient }}
+          style={{ background: palette.glow }}
         />
 
         {children}

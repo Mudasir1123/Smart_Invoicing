@@ -96,7 +96,7 @@ export default function Team() {
                   </div>
                   <a
                     href={`tel:${member.phone}`}
-                    className="inline-block text-center rounded-xl bg-gradient-to-r from-primary to-success px-6 py-4 text-sm font-black uppercase tracking-widest text-white shadow-md hover:shadow-xl transition-all duration-300"
+                    className="inline-block text-center rounded-xl bg-[#173B64] hover:bg-[#1E9AD8] px-6 py-4 text-sm font-black uppercase tracking-widest text-white shadow-md hover:shadow-xl transition-all duration-300"
                   >
                     Contact: {member.phone}
                   </a>

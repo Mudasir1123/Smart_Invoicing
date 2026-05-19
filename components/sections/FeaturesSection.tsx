@@ -41,18 +41,19 @@ function FeatureCard({ feature, index }: { feature: typeof features[number]; ind
     <motion.div
       initial={initial[dir]}
       whileInView={{ opacity: 1, x: 0, y: 0, rotateX: 0, scale: 1, rotate: 0 }}
-      viewport={{ once: false, margin: '-80px' }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ type: 'spring', stiffness: 60, damping: 20, delay: (index % 3) * 0.15 }}
       whileHover={{ y: -10, scale: 1.03 }}
       className="group relative cursor-default overflow-hidden rounded-[1.5rem]"
       style={{
         border: mounted && isDark ? `1.5px solid ${feature.color}44` : `1.5px solid ${feature.color}35`,
         background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
-        backdropFilter: 'blur(20px)',
+        backdropFilter: 'blur(10px)',
         boxShadow: mounted && isDark ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
         transformPerspective: 900,
         transformStyle: 'preserve-3d',
+        willChange: 'transform',
       }}
     >
       {/* Gradient glow on hover */}
@@ -68,7 +69,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[number]; ind
       {/* Animated bottom border */}
       <div
         className="absolute bottom-0 left-6 right-6 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none"
-        style={{ background: `linear-gradient(90deg, ${feature.color}, transparent)` }}
+        style={{ background: feature.color }}
       />
 
       <div className={`p-8 feat-card-${index}`}>
@@ -93,7 +94,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[number]; ind
 
         <div
           className="mt-6 h-[2px] w-0 group-hover:w-full rounded-full transition-all duration-500 pointer-events-none"
-          style={{ background: `linear-gradient(90deg, ${feature.color}, transparent)` }}
+          style={{ background: feature.color }}
         />
       </div>
     </motion.div>
@@ -107,7 +108,8 @@ export function FeaturesSection() {
     offset: ["start end", "end start"]
   })
   
-  const headerY = useTransform(scrollYProgress, [0, 0.5], [-80, 0])
+  const headerY = useTransform(scrollYProgress, [0, 0.35], [100, 0])
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1])
 
   return (
     <section id="features" ref={containerRef} className="relative py-32 px-6 lg:px-16 overflow-hidden">
@@ -119,7 +121,7 @@ export function FeaturesSection() {
       <div className="mx-auto max-w-[1400px] relative z-10">
         {/* Header — slides up with scrub */}
         <motion.div
-          style={{ y: headerY }}
+          style={{ y: headerY, opacity: headerOpacity }}
           className="text-center mb-28"
         >
           <span

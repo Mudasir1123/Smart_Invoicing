@@ -68,7 +68,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background pointer-events-none z-[1]" />
 
       <motion.div 
-        style={{ y: textY, opacity, scale }}
+        style={{ y: textY, opacity, scale, willChange: 'transform, opacity' }}
         className="relative z-10 mx-auto flex w-full flex-col items-center justify-center px-6 lg:px-16"
       >
         {/* Badge */}
@@ -85,9 +85,9 @@ export function HeroSection() {
 
         {/* MASSIVE Headline — Igloo Style */}
         <motion.h1
-          initial={{ opacity: 0, y: 60 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+          transition={{ duration: 0.65, delay: 0.05, ease: [0.215, 0.61, 0.355, 1] }}
           className="text-center font-black leading-[0.9] tracking-tighter w-full max-w-[1400px]"
           style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }} // Responsive massive text
         >
@@ -106,9 +106,9 @@ export function HeroSection() {
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.25, ease: [0.23, 1, 0.32, 1] }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.215, 0.61, 0.355, 1] }}
           className="mt-8 max-w-3xl text-center text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium"
         >
           Seamless operations for accounting, inventory, and manufacturing. Fully cloud-based, FBR-integrated, backed by 25+ years of expertise.

@@ -125,7 +125,7 @@ export default function About() {
                   delay: index * 0.1,
                   duration: 0.6,
                 }}
-                viewport={{ once: false }}
+                viewport={{ once: true }}
                 className="text-center"
               >
                 <motion.div
@@ -165,7 +165,7 @@ export default function About() {
                   damping: 15,
                   delay: index * 0.1,
                 }}
-                viewport={{ once: false }}
+                viewport={{ once: true }}
               >
                 <p className="text-5xl font-bold text-primary">
                   {stat.number}

@@ -64,7 +64,7 @@ export function PricingSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: '-80px' }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-6"
         >
@@ -84,7 +84,7 @@ export function PricingSection() {
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="flex items-center justify-center gap-4 mb-14"
         >
@@ -113,7 +113,7 @@ export function PricingSection() {
                 key={index}
                 initial={CARD_ENTRIES[index]}
                 whileInView={{ opacity: 1, x: 0, y: 0, scale: plan.highlight ? 1.04 : 1, rotate: 0 }}
-                viewport={{ once: false, margin: '-60px' }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{ type: 'spring', stiffness: 85, damping: 14, delay: index * 0.13 }}
                 whileHover={{ y: plan.highlight ? -6 : -10 }}
                 className="group relative flex flex-col justify-between min-h-[560px] rounded-[1.5rem] p-8 cursor-default"
@@ -122,7 +122,7 @@ export function PricingSection() {
                     ? `1.5px solid ${plan.color}${plan.highlight ? '77' : '44'}`
                     : `1.5px solid ${plan.color}${plan.highlight ? '55' : '35'}`,
                   background: mounted && isDark ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.65)',
-                  backdropFilter: 'blur(20px)',
+                  backdropFilter: 'blur(10px)',
                   boxShadow: plan.highlight 
                     ? (mounted && isDark 
                       ? `0 0 50px ${plan.color}25, 0 0 0 1px ${plan.color}33, inset 0 1px 1px rgba(255, 255, 255, 0.05)` 
@@ -131,6 +131,7 @@ export function PricingSection() {
                       ? 'inset 0 1px 1px rgba(255, 255, 255, 0.05)'
                       : 'none'),
                   transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
+                  willChange: 'transform',
                 }}
               >
                 {/* Glow on hover & inner sweep container (overflow hidden to clip sweep) */}
@@ -170,7 +171,7 @@ export function PricingSection() {
                         key={fi}
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false }}
+                        viewport={{ once: true }}
                         transition={{ delay: index * 0.08 + fi * 0.04 }}
                         className="flex items-center gap-3"
                       >
@@ -196,7 +197,7 @@ export function PricingSection() {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ delay: 0.5 }}
           className="text-center text-sm text-muted-foreground mt-12"
         >

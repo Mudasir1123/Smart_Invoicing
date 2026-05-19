@@ -64,14 +64,14 @@ export function WhyChooseSection() {
                 key={i}
                 initial={entry.initial}
                 whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, rotateY: 0 }}
-                viewport={{ once: false, margin: '-80px' }}
+                viewport={{ once: true, margin: '-80px' }}
                 transition={{ type: 'spring', stiffness: 60, damping: 20, delay: i * 0.15 }}
                 whileHover={{ y: -10, scale: 1.03 }}
                 className="group relative overflow-hidden rounded-[1.5rem] p-8 flex gap-6 cursor-default glass-card"
                 style={{
                   border: `1.5px solid ${reason.color}35`,
-
                   transition: 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
+                  willChange: 'transform',
                 }}
               >
                 {/* Glow on hover */}
@@ -102,11 +102,11 @@ export function WhyChooseSection() {
               key={i}
               initial={{ opacity: 0, y: 120, scale: 0.5 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: false, margin: '-80px' }}
+              viewport={{ once: true, margin: '-80px' }}
               transition={{ type: 'spring', stiffness: 80, damping: 15, delay: 0.2 + i * 0.15 }}
               whileHover={{ scale: 1.06, y: -5 }}
               className="group relative rounded-[1.5rem] text-center p-10 flex flex-col items-center justify-center cursor-default overflow-hidden glass-card"
-              style={{ border: `1.5px solid ${stat.color}35` }}
+              style={{ border: `1.5px solid ${stat.color}35`, willChange: 'transform' }}
             >
               <div className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: `inset 0 0 50px ${stat.color}22, 0 0 30px ${stat.color}18` }} />
               <p className="text-5xl font-black bg-clip-text text-transparent relative z-10" style={{ backgroundImage: `linear-gradient(135deg, ${stat.color}, #1E9AD8)` }}>

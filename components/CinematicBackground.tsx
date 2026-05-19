@@ -36,22 +36,23 @@ export function CinematicBackground() {
       
       {/* Large glowing orbs to give depth (Igloo style extreme colors) */}
       <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: isDark ? [0.3, 0.5, 0.3] : [0.15, 0.25, 0.15] }}
+        animate={{ scale: [1, 1.1, 1], opacity: isDark ? [0.25, 0.35, 0.25] : [0.15, 0.25, 0.15] }}
         transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full blur-[150px]"
+        className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full"
         style={{ 
-          background: 'radial-gradient(circle, #1E9AD8 0%, transparent 70%)',
-          mixBlendMode: isDark ? 'screen' : 'overlay',
-          opacity: isDark ? 0.4 : 0.08
+          background: isDark
+            ? 'radial-gradient(circle, rgba(30, 154, 216, 0.18) 0%, rgba(30, 154, 216, 0.05) 40%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(30, 154, 216, 0.1) 0%, rgba(30, 154, 216, 0.02) 40%, transparent 70%)',
         }}
       />
       <motion.div 
-        animate={{ scale: [1, 1.5, 1], opacity: isDark ? [0.2, 0.4, 0.2] : [0.05, 0.1, 0.05] }}
+        animate={{ scale: [1, 1.2, 1], opacity: isDark ? [0.15, 0.25, 0.15] : [0.05, 0.1, 0.05] }}
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute bottom-[-30%] right-[-10%] w-[80vw] h-[80vw] rounded-full blur-[180px]"
+        className="absolute bottom-[-30%] right-[-10%] w-[80vw] h-[80vw] rounded-full"
         style={{ 
-          background: 'radial-gradient(circle, #00A266 0%, transparent 70%)',
-          mixBlendMode: isDark ? 'screen' : 'overlay'
+          background: isDark
+            ? 'radial-gradient(circle, rgba(0, 162, 102, 0.15) 0%, rgba(0, 162, 102, 0.04) 40%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(0, 162, 102, 0.08) 0%, rgba(0, 162, 102, 0.02) 40%, transparent 70%)',
         }}
       />
 
@@ -59,8 +60,8 @@ export function CinematicBackground() {
       
       {/* Element 1: Invoice Card */}
       <motion.div
-        style={{ y: y1, rotate: rotate1, x: '10vw' }}
-        className="absolute top-[20vh] w-64 h-80 rounded-[2rem] glass-card p-6 shadow-2xl opacity-60"
+        style={{ y: y1, rotate: rotate1, x: '10vw', willChange: 'transform' }}
+        className={`absolute top-[20vh] w-64 h-80 rounded-[2rem] border p-6 shadow-2xl opacity-60 ${isDark ? 'border-white/5 bg-gray-950/20' : 'border-black/5 bg-white/40'}`}
       >
         <div className="w-12 h-12 rounded-full bg-blue-500/20 mb-6" />
         <div className="space-y-3">
@@ -82,8 +83,8 @@ export function CinematicBackground() {
 
       {/* Element 2: Chart Card */}
       <motion.div
-        style={{ y: y2, rotate: rotate2, right: '5vw' }}
-        className="absolute top-[10vh] w-80 h-64 rounded-[2rem] glass-card p-6 shadow-2xl opacity-40"
+        style={{ y: y2, rotate: rotate2, right: '5vw', willChange: 'transform' }}
+        className={`absolute top-[10vh] w-80 h-64 rounded-[2rem] border p-6 shadow-2xl opacity-40 ${isDark ? 'border-white/5 bg-gray-950/20' : 'border-black/5 bg-white/40'}`}
       >
         <div className="flex items-end gap-2 h-32 mt-4">
           {[40, 70, 45, 90, 65, 100].map((h, i) => (
@@ -98,8 +99,8 @@ export function CinematicBackground() {
 
       {/* Element 3: Stats Dashboard */}
       <motion.div
-        style={{ y: y3, rotate: rotate3, left: '-5vw' }}
-        className="absolute top-[60vh] w-72 h-48 rounded-[2rem] glass-card p-6 shadow-2xl opacity-50"
+        style={{ y: y3, rotate: rotate3, left: '-5vw', willChange: 'transform' }}
+        className={`absolute top-[60vh] w-72 h-48 rounded-[2rem] border p-6 shadow-2xl opacity-50 ${isDark ? 'border-white/5 bg-gray-950/20' : 'border-black/5 bg-white/40'}`}
       >
         <div className="flex justify-between items-start mb-6">
           <div className="h-10 w-10 rounded-xl bg-foreground/10" />
@@ -111,8 +112,8 @@ export function CinematicBackground() {
 
       {/* Element 4: Floating Receipt */}
       <motion.div
-        style={{ y: y4, rotate: rotate1, right: '15vw' }}
-        className={`absolute top-[70vh] w-56 h-96 rounded-[1.5rem] border backdrop-blur-3xl p-6 shadow-2xl ${isDark ? 'border-foreground/5 bg-background/40 opacity-30' : 'border-[#1E9AD8]/10 bg-white/95 opacity-90'}`}
+        style={{ y: y4, rotate: rotate1, right: '15vw', willChange: 'transform' }}
+        className={`absolute top-[70vh] w-56 h-96 rounded-[1.5rem] border p-6 shadow-2xl ${isDark ? 'border-foreground/5 bg-background/40 opacity-30' : 'border-[#1E9AD8]/10 bg-white/95 opacity-90'}`}
       >
         <div className="h-12 w-full rounded-xl bg-foreground/10 mb-6" />
         <div className="space-y-4">

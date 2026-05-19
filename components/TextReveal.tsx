@@ -46,7 +46,7 @@ export function TextReveal({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false }}
+      viewport={{ once: true }}
       className={className}
     >
       {Component === 'span' ? (
