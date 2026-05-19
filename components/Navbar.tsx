@@ -1,16 +1,19 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { AnimatedButton } from './AnimatedButton'
-import { Moon, Sun, ChevronDown } from 'lucide-react'
+import { Moon, Sun, ChevronDown, Menu, X } from 'lucide-react'
 
 export function Navbar() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
+  const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -178,8 +181,8 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Theme Toggle and CTA Button */}
-          <div className="flex items-center gap-3">
+          {/* Theme Toggle, Hamburger and CTA Button */}
+          <div className="flex items-center gap-2">
 
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -195,7 +198,17 @@ export function Navbar() {
               )}
             </motion.button>
 
-            <Link href="/login" className="hidden sm:inline-block">
+            {/* Hamburger mobile menu button */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden rounded-full p-2.5 transition-all duration-300 bg-black/5 dark:bg-white/5 text-foreground hover:text-[#1E9AD8] hover:bg-black/10 dark:hover:bg-white/10"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </motion.button>
+
+            <Link href="/login" className="hidden md:inline-block">
               <motion.span
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
@@ -205,7 +218,7 @@ export function Navbar() {
               </motion.span>
             </Link>
 
-            <Link href="/signup">
+            <Link href="/signup" className="hidden md:inline-block">
               <AnimatedButton variant="primary" size="md">
                 Get Started
               </AnimatedButton>
@@ -213,6 +226,124 @@ export function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Panel */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden w-full overflow-hidden bg-white/95 dark:bg-[#030712]/95 backdrop-blur-xl border-t border-black/5 dark:border-white/5"
+          >
+            <div className="px-6 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-base font-bold text-foreground hover:text-[#1E9AD8]"
+              >
+                Home
+              </Link>
+
+              {/* Solutions Accordion */}
+              <div>
+                <button
+                  onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                  className="w-full flex items-center justify-between py-2 text-base font-bold text-foreground hover:text-[#1E9AD8]"
+                >
+                  <span>Solutions</span>
+                  <ChevronDown size={18} className={`transition-transform duration-300 ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {mobileSolutionsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="pl-4 mt-2 space-y-2 border-l border-black/5 dark:border-white/5 overflow-hidden"
+                    >
+                      {solutionsItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="block py-2 text-sm font-semibold text-muted-foreground hover:text-[#1E9AD8]"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <Link
+                href="/pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-base font-bold text-foreground hover:text-[#1E9AD8]"
+              >
+                Pricing
+              </Link>
+
+              <Link
+                href="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-base font-bold text-foreground hover:text-[#00A266]"
+              >
+                Blog
+              </Link>
+
+              {/* Company Accordion */}
+              <div>
+                <button
+                  onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
+                  className="w-full flex items-center justify-between py-2 text-base font-bold text-foreground hover:text-[#00A266]"
+                >
+                  <span>Company</span>
+                  <ChevronDown size={18} className={`transition-transform duration-300 ${mobileCompanyOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {mobileCompanyOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="pl-4 mt-2 space-y-2 border-l border-black/5 dark:border-white/5 overflow-hidden"
+                    >
+                      {companyItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="block py-2 text-sm font-semibold text-muted-foreground hover:text-[#00A266]"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="pt-4 border-t border-black/5 dark:border-white/5 flex flex-col gap-3">
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <div className="w-full text-center py-2.5 rounded-xl text-sm font-bold text-foreground bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300">
+                    Log In
+                  </div>
+                </Link>
+                <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                  <div className="w-full text-center py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#1E9AD8] to-[#00A266] shadow-lg">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
