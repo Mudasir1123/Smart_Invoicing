@@ -130,8 +130,7 @@ export function IntegrationsSection() {
             href="tel:+923242465217"
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="flex-shrink-0 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg hover:!bg-none hover:bg-[#1E9AD8] transition-colors duration-300"
-            style={{ background: 'linear-gradient(135deg, #1E9AD8, #00A266)' }}
+            className="flex-shrink-0 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg bg-gradient-to-r from-[#1E9AD8] to-[#00A266] hover:from-[#00A266] hover:to-[#1E9AD8] transition-all duration-300"
           >
             Talk to Our Team
           </motion.a>
