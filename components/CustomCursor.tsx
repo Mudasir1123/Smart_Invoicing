@@ -41,13 +41,13 @@ export function CustomCursor() {
 
     const attachListeners = () => {
       document.querySelectorAll<HTMLElement>(hoverTargets).forEach((el) => {
-        el.addEventListener('mouseenter', onEnter)
-        el.addEventListener('mouseleave', onLeave)
+        el.addEventListener('mouseenter', onEnter, { passive: true })
+        el.addEventListener('mouseleave', onLeave, { passive: true })
       })
     }
     attachListeners()
 
-    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mousemove', onMove, { passive: true })
 
     return () => {
       window.removeEventListener('mousemove', onMove)

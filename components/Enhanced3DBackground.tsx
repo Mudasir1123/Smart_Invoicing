@@ -54,7 +54,7 @@ export function Enhanced3DBackground() {
           animate={{ opacity: isDark ? 0.8 : 0.9 }}
           transition={{ duration: 2 }}
           style={{ rotateX, rotateY, scale: scaleValue }}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
+          className={`absolute inset-0 transition-opacity duration-1000 will-change-transform ${
             isDark
               ? 'bg-gradient-to-tr from-blue-950/40 via-purple-950/30 to-indigo-950/20'
               : 'bg-gradient-to-tr from-sky-200/30 via-blue-100/20 to-emerald-100/30'
@@ -68,7 +68,7 @@ export function Enhanced3DBackground() {
             scale: [1, 1.08, 1],
           }}
           transition={{ duration: 8, repeat: Infinity }}
-          className="absolute -top-[15%] -left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none transition-colors duration-500"
+          className="absolute -top-[15%] -left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none transition-colors duration-500 will-change-transform"
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(59, 130, 246, 0.1) 45%, transparent 70%)'
@@ -84,7 +84,7 @@ export function Enhanced3DBackground() {
             scale: [1, 1.1, 1],
           }}
           transition={{ duration: 10, repeat: Infinity, delay: 2 }}
-          className="absolute -top-[5%] right-[-15%] w-[50vw] h-[50vw] rounded-full pointer-events-none transition-colors duration-500"
+          className="absolute -top-[5%] right-[-15%] w-[50vw] h-[50vw] rounded-full pointer-events-none transition-colors duration-500 will-change-transform"
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(236, 72, 153, 0.08) 45%, transparent 70%)'
@@ -100,7 +100,7 @@ export function Enhanced3DBackground() {
             scale: [1, 1.08, 1],
           }}
           transition={{ duration: 12, repeat: Infinity, delay: 4 }}
-          className="absolute -bottom-[15%] left-[15%] w-[55vw] h-[55vw] rounded-full pointer-events-none transition-colors duration-500"
+          className="absolute -bottom-[15%] left-[15%] w-[55vw] h-[55vw] rounded-full pointer-events-none transition-colors duration-500 will-change-transform"
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(20, 184, 166, 0.08) 45%, transparent 70%)'
@@ -330,29 +330,47 @@ function CursorGlow({ isDark }: { isDark: boolean }) {
   const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const glow = glowRef.current
+    if (!glow) return
+
+    let mouseX = 0, mouseY = 0
+    let currentX = 0, currentY = 0
+    let rafId: number
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!glowRef.current) return
-      gsap.to(glowRef.current, {
-        x: e.clientX - 120,
-        y: e.clientY - 120,
-        duration: 1,
-        ease: 'power3.out',
-      })
+      mouseX = e.clientX - 120
+      mouseY = e.clientY - 120
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
+
+    const tick = () => {
+      currentX = lerp(currentX, mouseX, 0.1)
+      currentY = lerp(currentY, mouseY, 0.1)
+      if (Math.abs(currentX - mouseX) > 0.1 || Math.abs(currentY - mouseY) > 0.1) {
+         glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+    
+    tick()
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (
     <div
       ref={glowRef}
-      className="absolute top-0 left-0 w-[240px] h-[240px] rounded-full pointer-events-none transition-colors duration-500"
+      className="absolute top-0 left-0 w-[240px] h-[240px] rounded-full pointer-events-none transition-colors duration-500 will-change-transform"
       style={{
         background: isDark
           ? 'radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%)'
           : 'radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%)',
-        transform: 'translate3d(0, 0, 0)',
+        transform: 'translate3d(-240px, -240px, 0)',
       }}
     />
   )

@@ -36,7 +36,7 @@ export function FaqSection() {
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: false, margin: '-80px' }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="text-center mb-16"
         >
@@ -59,7 +59,7 @@ export function FaqSection() {
               key={i}
               initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: '-40px' }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: i * 0.05, ease: [0.23, 1, 0.32, 1] }}
               className="overflow-hidden rounded-[1.5rem] cursor-default"
               style={{
@@ -113,7 +113,7 @@ export function FaqSection() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 30 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: false, margin: '-40px' }}
+          viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.4, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           className="mt-12 rounded-[1.5rem] p-8 text-center"
           style={{ 

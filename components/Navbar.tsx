@@ -47,7 +47,7 @@ export function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 z-50 w-full transition-colors duration-500 bg-white/60 dark:bg-[#030712]/60 backdrop-blur-xl shadow-sm border-b border-black/5 dark:border-white/5"
+      className="fixed top-0 z-50 w-full transition-colors duration-500 bg-white/60 dark:bg-[#030712]/60 backdrop-blur-xl shadow-sm border-b border-black/5 dark:border-white/5 will-change-transform"
     >
       <div className="mx-auto max-w-7xl px-6 py-4 lg:px-16">
         <div className="flex items-center justify-between">
@@ -99,7 +99,7 @@ export function Navbar() {
                   pointerEvents: openDropdown === 'solutions' ? 'auto' : 'none',
                 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="absolute left-0 top-full mt-1 w-[320px] rounded-2xl shadow-2xl py-3 border backdrop-blur-2xl bg-white/95 dark:bg-[#0a0f1a]/95 border-black/5 dark:border-white/10"
+                className="absolute left-0 top-full mt-1 w-[320px] rounded-2xl shadow-2xl py-3 border backdrop-blur-2xl bg-white/95 dark:bg-[#0a0f1a]/95 border-black/5 dark:border-white/10 will-change-transform"
               >
                 {solutionsItems.map((item) => (
                   <Link
@@ -160,7 +160,7 @@ export function Navbar() {
                   pointerEvents: openDropdown === 'company' ? 'auto' : 'none',
                 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="absolute left-0 top-full mt-1 w-[280px] rounded-2xl shadow-2xl py-3 border backdrop-blur-2xl bg-white/95 dark:bg-[#0a0f1a]/95 border-black/5 dark:border-white/10"
+                className="absolute left-0 top-full mt-1 w-[280px] rounded-2xl shadow-2xl py-3 border backdrop-blur-2xl bg-white/95 dark:bg-[#0a0f1a]/95 border-black/5 dark:border-white/10 will-change-transform"
               >
                 {companyItems.map((item) => (
                   <Link

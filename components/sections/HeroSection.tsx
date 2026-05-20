@@ -5,26 +5,9 @@ import { useRef, useEffect, useState } from 'react'
 import { AnimatedButton } from '../AnimatedButton'
 import { TrendingUp, FileText, Users, Zap, CheckCircle, BarChart2 } from 'lucide-react'
 
-function useCounter(target: number, duration = 2200, started = false) {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    if (!started) return
-    let startTime: number
-    const step = (ts: number) => {
-      if (!startTime) startTime = ts
-      const p = Math.min((ts - startTime) / duration, 1)
-      setCount(Math.floor((1 - Math.pow(1 - p, 3)) * target))
-      if (p < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [started, target, duration])
-  return count
-}
-
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const [started, setStarted] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
-  const count = useCounter(target, 2200, started)
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setStarted(true); obs.disconnect() } }, { threshold: 0.5 })
@@ -32,7 +15,26 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
     return () => obs.disconnect()
   }, [])
 
-  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>
+  useEffect(() => {
+    if (!started || !ref.current) return;
+    let startTime: number;
+    let animationFrameId: number;
+    const duration = 2200;
+
+    const step = (ts: number) => {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      const val = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+      if (ref.current) {
+        ref.current.textContent = val.toLocaleString() + suffix;
+      }
+      if (p < 1) animationFrameId = requestAnimationFrame(step);
+    };
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [started, target, suffix])
+
+  return <span ref={ref}>0{suffix}</span>
 }
 
 const stats = [

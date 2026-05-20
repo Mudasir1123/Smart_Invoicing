@@ -24,7 +24,7 @@ export default function About() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="glass-card p-10 md:p-16 text-center relative overflow-hidden"
+              className="glass-card p-10 md:p-16 text-center relative overflow-hidden will-change-transform"
               style={{ border: '1.5px solid rgba(30,154,216,0.25)' }}
             >
               <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full blur-3xl opacity-10" style={{ background: '#1E9AD8' }} />
@@ -57,7 +57,7 @@ export default function About() {
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ type: 'spring', stiffness: 60, damping: 15 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="glass-card p-10 relative overflow-hidden flex flex-col justify-between"
+                className="glass-card p-10 relative overflow-hidden flex flex-col justify-between will-change-transform"
                 style={{ border: '1.5px solid rgba(30,154,216,0.25)' }}
               >
                 <div className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: 'inset 0 0 50px rgba(30,154,216,0.1)' }} />
@@ -79,7 +79,7 @@ export default function About() {
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.15 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="glass-card p-10 relative overflow-hidden flex flex-col justify-between"
+                className="glass-card p-10 relative overflow-hidden flex flex-col justify-between will-change-transform"
                 style={{ border: '1.5px solid rgba(0,162,102,0.25)' }}
               >
                 <div className="absolute inset-0 rounded-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: 'inset 0 0 50px rgba(0,162,102,0.1)' }} />
@@ -129,7 +129,7 @@ export default function About() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="mb-12 text-center text-4xl font-bold"
+              className="mb-12 text-center text-4xl font-bold will-change-transform"
             >
               Why Choose Smart Invoicing?
             </motion.h2>

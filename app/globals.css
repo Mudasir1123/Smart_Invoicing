@@ -137,7 +137,7 @@
     0 20px 40px -15px rgba(30, 154, 216, 0.12),
     0 1px 0 0 rgba(255,255,255,0.9) inset;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
 }
 
 .dark .glass-card {
@@ -227,9 +227,9 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Smooth Scroll & Font Size reduction by 2px */
+/* Font Size reduction by 2px */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   font-size: 14px;
 }
 

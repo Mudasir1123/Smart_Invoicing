@@ -79,8 +79,8 @@ export function AnimatedCard({
 
   // Split layout/sizing classes for the outer wrapper, and keep styling/padding on the inner card
   const classes = className.split(' ')
-  const outerClasses = classes.filter(c => c.startsWith('col-') || c.startsWith('md:col-') || c.startsWith('lg:col-') || c.includes('grid') || c.includes('flex-1') || c.startsWith('h-') || c.startsWith('w-')).join(' ')
-  const innerClasses = classes.filter(c => !c.startsWith('col-') && !c.startsWith('md:col-') && !c.startsWith('lg:col-') && !c.includes('grid') && !c.includes('flex-1')).join(' ')
+  const outerClasses = classes.filter(c => c.startsWith('col-') || c.startsWith('md:col-') || c.startsWith('lg:col-') || c.includes('grid') || c.includes('flex-1') || c.startsWith('h-') || c.startsWith('w-') || c.startsWith('min-h-') || c.startsWith('max-h-') || c.startsWith('max-w-')).join(' ')
+  const innerClasses = classes.filter(c => !c.startsWith('col-') && !c.startsWith('md:col-') && !c.startsWith('lg:col-') && !c.includes('grid') && !c.includes('flex-1') && !c.startsWith('min-h-') && !c.startsWith('max-h-') && !c.startsWith('max-w-')).join(' ')
 
   return (
     <motion.div
@@ -94,13 +94,13 @@ export function AnimatedCard({
         mass: 1.2,
         delay: delay + index * 0.15,
       }}
-      viewport={{ once: false, margin: '-60px' }}
+      viewport={{ once: true, margin: '-40px' }}
       style={{ rotateX, rotateY, transformPerspective: 1000 }}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       data-cursor-hover
-      className={`relative group cursor-pointer ${neonBorder ? 'neon-border' : ''} ${outerClasses}`}
+      className={`relative group cursor-pointer will-change-transform ${neonBorder ? 'neon-border' : ''} ${outerClasses}`}
     >
       {/* Gradient border wrapper */}
       <div

@@ -39,7 +39,7 @@ export default function Team() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="mb-6 inline-block rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest border"
+              className="mb-6 inline-block rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest border will-change-transform"
               style={{ color: '#1E9AD8', borderColor: 'rgba(30,154,216,0.4)', background: 'rgba(30,154,216,0.1)' }}
             >
               Meet The Experts
@@ -113,7 +113,7 @@ export default function Team() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="mb-16 text-center text-4xl font-black text-foreground"
+              className="mb-16 text-center text-4xl font-black text-foreground will-change-transform"
             >
               Our Culture & Values
             </motion.h2>
